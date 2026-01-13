@@ -1,33 +1,19 @@
-import { useState } from "react";
-import { Text, View, StyleSheet, Pressable, Alert } from "react-native";
+import { Text, View, StyleSheet, Pressable } from "react-native";
+import { useCounterStore } from "@/store/useCounterStore";
 
 export default function Index() {
-  const [count, setCount] = useState(0);
-
-  const handleIncrement = () => {
-    if (count < 10) {
-      setCount(count + 1);
-    } else {
-      Alert.alert("You can't go above 10");
-    }
-  };
-
-  const handleDecrement = () => {
-    if (count > 0) {
-      setCount(count - 1);
-    } else {
-      Alert.alert("You can't go below 0");
-    }
-  };
+  const count = useCounterStore((state) => state.count);
+  const increment = useCounterStore((state) => state.increment);
+  const decrement = useCounterStore((state) => state.decrement);
 
   return (
     <View style={styles.container}>
       <Text style={styles.counterText}>{count}</Text>
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.button} onPress={handleDecrement}>
+        <Pressable style={styles.button} onPress={decrement}>
           <Text style={styles.buttonText}>-</Text>
         </Pressable>
-        <Pressable style={styles.button} onPress={handleIncrement}>
+        <Pressable style={styles.button} onPress={increment}>
           <Text style={styles.buttonText}>+</Text>
         </Pressable>
       </View>
